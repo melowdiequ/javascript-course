@@ -1,3 +1,5 @@
+// JavaScript Fundamentals - Hour 2
+
 //Exercise: Score Calculator
 let score = 100;
 
