@@ -540,3 +540,106 @@
 // user.toggleStatus();
 // console.log(`\nAfter updates:`);
 // console.log(user.getSummary());
+
+// ====== State ======
+const gameState = {
+  scores: [0, 0],         // [p1, p2]
+  target: 5,
+  gameActive: true,
+
+  setTarget(n) {
+    this.target = Math.max(1, Math.min(20, Number(n) || 1));
+    document.querySelector(".target").textContent = this.target;
+  },
+
+  reset() {
+    this.scores = [0, 0];
+    this.gameActive = true;
+    this.updateDisplay();
+    clearWinStyles();
+    hideWinner();
+  },
+
+  addPoint(playerIndex) {
+    if (!this.gameActive) return;
+    this.scores[playerIndex]++;
+    this.updateDisplay();
+    this.checkWinner();
+  },
+
+  updateDisplay() {
+    document.getElementById("score-1").textContent = this.scores[0];
+    document.getElementById("score-2").textContent = this.scores[1];
+  },
+
+  checkWinner() {
+    const [s1, s2] = this.scores;
+    if (s1 >= this.target || s2 >= this.target) {
+      this.gameActive = false;
+      const winner = s1 > s2 ? 1 : 2;
+      showWinner(winner);
+      applyWinStyles(winner);
+    }
+  }
+};
+
+// ====== DOM refs ======
+const addButtons = document.querySelectorAll(".btn-add");
+const resetBtn = document.getElementById("btn-reset");
+const inputTarget = document.getElementById("winning-score");
+const winnerEl = document.querySelector(".winner");
+const winnerNameEl = document.querySelector(".winner-name");
+const players = {
+  1: document.querySelector(".player-1"),
+  2: document.querySelector(".player-2"),
+};
+
+// ====== Helpers (UI) ======
+function showWinner(winner) {
+  winnerNameEl.textContent = `Player ${winner}`;
+  winnerEl.classList.remove("hidden");
+  document.querySelector(".status").textContent = `Game Over • Player ${winner} reached ${gameState.target}`;
+}
+
+function hideWinner() {
+  winnerEl.classList.add("hidden");
+  document.querySelector(".status").innerHTML = `First to <span class="target">${gameState.target}</span> wins!`;
+}
+
+function applyWinStyles(winner) {
+  const loser = winner === 1 ? 2 : 1;
+  players[winner].classList.add("winner");
+  players[loser].classList.add("loser");
+}
+
+function clearWinStyles() {
+  Object.values(players).forEach(p => {
+    p.classList.remove("winner", "loser");
+  });
+}
+
+// ====== Events ======
+addButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const who = Number(btn.dataset.player) - 1; // 0 or 1
+    gameState.addPoint(who);
+  });
+});
+
+resetBtn.addEventListener("click", () => gameState.reset());
+
+inputTarget.addEventListener("input", () => {
+  gameState.setTarget(inputTarget.value);
+});
+
+// Keyboard shortcuts: "1" -> P1, "2" -> P2, "R" -> reset
+document.addEventListener("keydown", (e) => {
+  if (e.key === "1") gameState.addPoint(0);
+  if (e.key === "2") gameState.addPoint(1);
+  if (e.key.toLowerCase() === "r") gameState.reset();
+});
+
+// Init
+gameState.setTarget(inputTarget.value);
+gameState.reset();
+
