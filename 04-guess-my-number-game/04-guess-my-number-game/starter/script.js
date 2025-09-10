@@ -42,7 +42,7 @@ console.log('Number:', numberE1);
 console.log('Highscore:', highScoreE1);
 console.log('Guess:', guessInput);
 
-let secretNumber = Math.trunc(Math.random() * 20) + 1;
+let secretNumber = Math.trunc(Math.random() * MAX_NUMBER) + MIN_NUMBER;
 console.log('Secret number:', secretNumber);
 
 let score = 20;
@@ -69,7 +69,7 @@ document.querySelector('.check').addEventListener('click', function () {
       'Number must be between 1 and 20!';
     return; 
   }
-  
+
   if (!guess) {
     document.querySelector('.message').textContent = 'Please Input a Number';
   }
@@ -140,3 +140,45 @@ document.querySelector('.check').addEventListener('click', function () {
 
 
 });
+
+const MIN_NUMBER = 1;
+const MAX_NUMBER = 20;
+const START_SCORE = 20;
+
+const bodyEl = document.body;
+const messageEl = document.querySelector('.message');
+const numberEl = document.querySelector('.number');
+const scoreEl = document.querySelector('.score');
+const highscoreEl = document.querySelector('.highscore');
+const guessInputEl = document.querySelector('.guess');
+const checkBtnEl = document.querySelector('.check');
+const againBtnEl = document.querySelector('.again');
+
+// UI Helper
+function setMessage(text) {
+  messageEl.textContent = text;
+}
+function setNumber(value) {
+  numberEl.textContent = value;
+}
+function setScore(value) {
+  scoreEl.textContent = value;
+}
+function setHighscore(value) {
+  highscoreEl.textContent = value;
+}
+function setBackground(color) {
+  bodyEl.style.backgroundColor = color;
+}
+function disablePlay(disabled) {
+  guessInputEl.disabled = disabled;
+  checkBtnEl.disabled = disabled;
+}
+function clearInput() {
+  guessInputEl.value = '';
+}
+
+let secretNumber = Math.trunc(Math.random() * MAX_NUMBER + MIN_NUMBER;
+console.log('First Secret Number:', secretNumber);
+let score = START_SCORE;
+let highscore = 0;
