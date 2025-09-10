@@ -64,9 +64,19 @@ document.querySelector('.check').addEventListener('click', function () {
   const guess = Number(document.querySelector('.guess').value);
   console.log('Player guessed:', guess);
 
-  if (guess === secretNumber) {
+      if (guess < 1 || guess > 20) {
+    document.querySelector('.message').textContent =
+      'Number must be between 1 and 20!';
+    return; 
+  }
+  
+  if (!guess) {
+    document.querySelector('.message').textContent = 'Please Input a Number';
+  }
+
+  if (!guess === secretNumber) {
     console.log('Correct guess!');
-    document.querySelector('.message').textContent = '🎉 Correct Number!';
+    //document.querySelector('.message').textContent = '🎉 Correct Number!';
     document.querySelector('.number').textContent = secretNumber;
 
     if (score > highscore) {
@@ -77,6 +87,8 @@ document.querySelector('.check').addEventListener('click', function () {
     document.querySelector('.message').textContent = '🎉 You won!';
     document.querySelector('.guess').disabled = true;
     document.querySelector('.check').disabled = true;
+
+    document.body.style.backgroundColor = 'green';
 
   } else if (guess > secretNumber) {
     console.log('Too high!');
@@ -96,5 +108,35 @@ document.querySelector('.check').addEventListener('click', function () {
     document.querySelector('.number').textContent = secretNumber;
     document.querySelector('.guess').disabled = true;
     document.querySelector('.check').disabled = true;
+
+    document.body.style.backgroundColor = 'red';
   }
+});
+
+document.querySelector('.again').addEventListener('click', function () {
+    score = 20;
+    secretNumber = Math.trunc(Math.random() * 20) + 1;
+console.log('New secret number is:', secretNumber);
+
+    document.querySelector('.message').textContent = 'Start guessing...';
+  document.querySelector('.number').textContent = '?';
+  document.querySelector('.score').textContent = score;
+  document.querySelector('.guess').value = '';
+
+  document.querySelector('.guess').disabled = false;
+  document.querySelector('.check').disabled = false;
+
+  document.body.style.backgroundColor = '';
+});
+
+document.querySelector('.check').addEventListener('click', function () {
+  const guess = Number(document.querySelector('.guess').value);
+
+
+  if (!guess) {
+    document.querySelector('.message').textContent = 'No number!';
+    return; 
+  }
+
+
 });
