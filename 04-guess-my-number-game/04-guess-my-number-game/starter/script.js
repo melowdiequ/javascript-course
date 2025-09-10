@@ -1,11 +1,11 @@
 'use strict';
 
-// console.log('=== GAME DEVELOPMENT: GUESS MY NUMBER ===');
+console.log('=== GAME DEVELOPMENT: GUESS MY NUMBER ===');
 
-// console.log('Goal: Build a complete interactive game from scratch');
-// console.log('Focus: DOM manipulation, game state, and user interaction');
+console.log('Goal: Build a complete interactive game from scratch');
+console.log('Focus: DOM manipulation, game state, and user interaction');
 
-// console.log('=== DOM ELEMENT SELECTION ===');
+console.log('=== DOM ELEMENT SELECTION ===');
 
 const messageE1 = document.querySelector('.message');
 console.log(messageE1);
@@ -51,7 +51,7 @@ let highscore = 0;
 let playerName = 'Player';
 let attempts = 0;
 let gameActive = true;
-let easySecret = Math.trunc(Math.random () * 10) + 1;
+let easySecret = Math.trunc(Math.random() * 10) + 1;
 
 console.log('Player:', playerName);
 console.log('Attempts:', attempts);
@@ -59,19 +59,42 @@ console.log('Game active:', gameActive);
 console.log('Easy secret number:', easySecret);
 
 document.querySelector('.check').addEventListener('click', function () {
-    console.log('Check button clicked!');
+  console.log('Check button clicked!');
 
-    const guess = 
-    Number(document.querySelector('.guess').value);
-    console.log('Player guessed:', guess);
+  const guess = Number(document.querySelector('.guess').value);
+  console.log('Player guessed:', guess);
 
-    if (guess === secretNumber) {
-        console.log('Correct guess!');
-        document.querySelector('.message').textContent = 'Correct Number!';
-        document.querySelector('.number').textContent = secretNumber;
-    } else if (guess > secretNumber) {
-        console.log('Too high!');
-        document.querySelector('.message').textContent = 'Too low!';
+  if (guess === secretNumber) {
+    console.log('Correct guess!');
+    document.querySelector('.message').textContent = '🎉 Correct Number!';
+    document.querySelector('.number').textContent = secretNumber;
+
+    if (score > highscore) {
+      highscore = score;
+      document.querySelector('.highscore').textContent = highscore;
     }
-});
 
+    document.querySelector('.message').textContent = '🎉 You won!';
+    document.querySelector('.guess').disabled = true;
+    document.querySelector('.check').disabled = true;
+
+  } else if (guess > secretNumber) {
+    console.log('Too high!');
+    document.querySelector('.message').textContent = '📈 Too high!';
+    score--;
+    document.querySelector('.score').textContent = score;
+
+  } else if (guess < secretNumber) {
+    console.log('Too low!');
+    document.querySelector('.message').textContent = '📉 Too low!';
+    score--;
+    document.querySelector('.score').textContent = score;
+  }
+
+  if (score < 1) {
+    document.querySelector('.message').textContent = '💥 You lost!';
+    document.querySelector('.number').textContent = secretNumber;
+    document.querySelector('.guess').disabled = true;
+    document.querySelector('.check').disabled = true;
+  }
+});
