@@ -1,8 +1,7 @@
 // === GUESS MY NUMBER GAME ===
-// Hour 1–3 Foundation, Logic, and UX Enhancements
 'use strict';
 
-////////////////////////////////////
+
 // constants & selectors
 
 // ranges and defaults
@@ -20,7 +19,6 @@ const guessEl = document.querySelector('.guess');
 const checkBtnEl = document.querySelector('.check');
 const againBtnEl = document.querySelector('.again');
 
-////////////////////////////////////
 // ui helpers
 
 function setMessage(text) {
@@ -46,7 +44,7 @@ function clearInput() {
   guessEl.value = '';
 }
 
-////////////////////////////////////
+
 // game state & reset
 
 let secretNumber = Math.trunc(Math.random() * MAX_NUMBER) + MIN_NUMBER;
@@ -73,7 +71,7 @@ function renderInitialUI() {
 // initial render
 renderInitialUI();
 
-////////////////////////////////////
+
 // event listeners - main logic
 
 checkBtnEl.addEventListener('click', function () {
@@ -114,7 +112,6 @@ checkBtnEl.addEventListener('click', function () {
   }
 });
 
-////////////////////////////////////
 // restart game
 
 againBtnEl.addEventListener('click', function () {
@@ -123,7 +120,6 @@ againBtnEl.addEventListener('click', function () {
   guessEl.focus();
 });
 
-////////////////////////////////////
 // UX enhancements
 
 // pressing Enter triggers the check button
