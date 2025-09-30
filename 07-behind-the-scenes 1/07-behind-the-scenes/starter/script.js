@@ -309,4 +309,4 @@ const myTimer = {
   },
 };
 
-myTimer.startCountdown();
+myTimer.startCountdown(); d
